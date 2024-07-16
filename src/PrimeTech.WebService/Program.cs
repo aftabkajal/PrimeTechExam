@@ -1,7 +1,13 @@
-using PrimeTech.Interview.Business.Infrastructure.Data;
-using PrimeTech.Interview.Business.Infrastructure.Middleware;
-using Serilog;
 using Microsoft.EntityFrameworkCore;
+using PrimeTech.Interview.Business.Application.Interfaces;
+using PrimeTech.Interview.Business.Application.Services;
+using PrimeTech.Interview.Business.CommandHandlers.Handlers;
+using PrimeTech.Interview.Business.Domain.Common;
+using PrimeTech.Interview.Business.Infrastructure.Data;
+using PrimeTech.Interview.Business.Infrastructure.Extensions;
+using PrimeTech.Interview.Business.Infrastructure.Middleware;
+using PrimeTech.Interview.Business.QueryHandlers.Handlers;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +28,18 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.RegisterInfrastructure();
 
+builder.Services.RegisterCollection(
+                typeof(ICommandHandler<,>),
+                new[] { typeof(TestCommandHandler).Assembly });
+
+builder.Services.RegisterCollection(
+        typeof(IQueryHandler<,>),
+        new[] { typeof(TestQueryHandler).Assembly });
+
+builder.Services.AddScoped<ICompanyCustomFieldService, CompanyCustomFieldService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 
 
 var app = builder.Build();

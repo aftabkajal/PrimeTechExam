@@ -1,48 +1,79 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PrimeTech.Interview.Business.Commands.Commands;
+using PrimeTech.Interview.Business.Domain.Common;
+using PrimeTech.Interview.Business.Domain.Dispatchers;
+using PrimeTech.Interview.Business.Queries.Queries;
 
-
-namespace PrimeTech.Interview.Business.WebService.Controllers;
-
-[Route("api/[controller]")]
-[ApiController]
-public class CompaniesController : ControllerBase
+namespace PrimeTech.Interview.Business.WebService.Controllers
 {
-    private readonly ILogger<CompaniesController> _logger;
-    public CompaniesController(
-        ILogger<CompaniesController> logger)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CompaniesController : ControllerBase
     {
-        _logger = logger;
-    }
-    // GET: api/<CompaniesController>
-    [HttpGet]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "value1", "value2" };
-    }
+        private readonly ILogger<CompaniesController> _logger;
+        private readonly ICommandDispatcher _commandDispatcher;
+        private readonly IQueryDispatcher _queryDispatcher;
 
-    // GET api/<CompaniesController>/5
-    [HttpGet("{id}")]
-    public string Get(int id)
-    {
-        return "value";
-    }
+        public CompaniesController(
+            ILogger<CompaniesController> logger,
+            ICommandDispatcher commandDispatcher,
+            IQueryDispatcher queryDispatcher)
+        {
+            _logger = logger;
+            _commandDispatcher = commandDispatcher;
+            _queryDispatcher = queryDispatcher;
+        }
 
-    // POST api/<CompaniesController>
-    [HttpPost]
-    public void Post([FromBody] string value)
-    {
-    }
+        // GET: api/Companies
+        [HttpGet("all")]
+        public async Task<object> GetAllCompanies([FromBody] GetAllCompaniesQuery query)
+        {
+            var result = await _queryDispatcher.DispatchAsync<GetAllCompaniesQuery, StringResult>(query);
+            return result.GetResponse();
+        }
 
-    // PUT api/<CompaniesController>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
+        // GET: api/Companies/customfields
+        [HttpGet("customfields")]
+        public async Task<object> GetCompanyCustomFieldsByCompanyId([FromBody] GetCompanyCustomFieldsByCompanyQuery query)
+        {
+            var result = await _queryDispatcher.DispatchAsync<GetCompanyCustomFieldsByCompanyQuery, StringResult>(query);
+            return result.GetResponse();
+        }
 
-    // DELETE api/<CompaniesController>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
-    {
+        // GET: api/Companies/{id}
+        [HttpGet("{id}")]
+        public async Task<object> GetCompany([FromBody] GetCompanyQuery query)
+        {
+            var result = await _queryDispatcher.DispatchAsync<GetCompanyQuery, StringResult>(query);
+            return result.GetResponse();
+        }
+
+        // POST: api/Companies
+        [HttpPost]
+        public async Task<CommandResponse> Post([FromBody] CreateCompanyCommand command)
+        {
+            return await _commandDispatcher.DispatchAsync<CreateCompanyCommand, CommandResponse>(command);
+        }
+
+        // PUT: api/Companies
+        [HttpPut]
+        public async Task<CommandResponse> Put([FromBody] UpdateCompanyCommand command)
+        {
+            return await _commandDispatcher.DispatchAsync<UpdateCompanyCommand, CommandResponse>(command);
+        }
+
+        // DELETE: api/Companies
+        [HttpDelete]
+        public async Task<CommandResponse> Delete([FromBody] DeleteCompanyCommand command)
+        {
+            return await _commandDispatcher.DispatchAsync<DeleteCompanyCommand, CommandResponse>(command);
+        }
+
+        // POST: api/Companies/customfield
+        [HttpPost("customfield")]
+        public async Task<CommandResponse> CreateCompanyCustomField([FromBody] CreateCompanyCustomFieldCommand command)
+        {
+            return await _commandDispatcher.DispatchAsync<CreateCompanyCustomFieldCommand, CommandResponse>(command);
+        }
     }
 }
-

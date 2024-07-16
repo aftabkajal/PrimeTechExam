@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PrimeTech.CommandHandlers\PrimeTech.CommandHandlers.csproj" />
     <ProjectReference Include="..\PrimeTech.Infrastructure\PrimeTech.Infrastructure.csproj" />
+    <ProjectReference Include="..\PrimeTech.QueryHandlers\PrimeTech.QueryHandlers.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,6 +6,8 @@ namespace PrimeTech.Interview.Business.Infrastructure.Data;
 public class ApplicationDbContext : DbContext
 {
     public DbSet<Company> Companies { get; set; }
+    public DbSet<CompanyCustomField> CompanyCustomFields { get; set; }
+
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)

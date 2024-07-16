@@ -2,17 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+	  
 	<RootNamespace>PrimeTech.Interview.Business.CommandHandlers</RootNamespace>
 	<AssemblyName>PrimeTech.Interview.Business.CommandHandlers</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PrimeTech.Application\PrimeTech.Application.csproj" />
     <ProjectReference Include="..\PrimeTech.Commands\PrimeTech.Commands.csproj" />
+    <ProjectReference Include="..\PrimeTech.Domain\PrimeTech.Domain.csproj" />
   </ItemGroup>
 
 </Project>
