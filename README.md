@@ -10,7 +10,7 @@ Please implement the feature to add customization on the table only for the text
 
 Please design the database in a way so that in the future another type field can be added.
 
-Task 1: Create CRUD for the company table.
+Task 1: Create CRUD for the company table. \b
 Task 2: Implement company-wise extra field facility.
 
 # PrimeTechExam Solution
