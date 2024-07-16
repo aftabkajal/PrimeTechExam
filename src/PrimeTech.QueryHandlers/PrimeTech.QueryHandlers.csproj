@@ -6,4 +6,8 @@
 	<AssemblyName>PrimeTech.Interview.Business.QueryHandlers</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\" />
+  </ItemGroup>
+
 </Project>

@@ -10,4 +10,9 @@
     <Folder Include="Handlers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PrimeTech.Application\PrimeTech.Application.csproj" />
+    <ProjectReference Include="..\PrimeTech.Commands\PrimeTech.Commands.csproj" />
+  </ItemGroup>
+
 </Project>

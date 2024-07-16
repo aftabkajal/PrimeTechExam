@@ -6,4 +6,8 @@
 	<AssemblyName>PrimeTech.Interview.Business.Queries</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
 </Project>
