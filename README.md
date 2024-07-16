@@ -13,8 +13,7 @@ Please design the database in a way so that in the future another type field can
 Task 1: Create CRUD for the company table.
 Task 2: Implement company-wise extra field facility.
 ==================================================================================
-
-# PrimeTech Database Schema
+# PrimeTechExam Solution
 
 ## Overview
 
