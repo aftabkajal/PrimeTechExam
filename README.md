@@ -31,6 +31,10 @@ This document provides an overview of the database schema used in the PrimeTech 
 - Unit of Work Pattern
 - Repository Pattern
 - Clean Architecture
+- FluentValidation
+- Serilog
+- Swagger
+- SQL
 
 ## Features
 - CRUD Operations
