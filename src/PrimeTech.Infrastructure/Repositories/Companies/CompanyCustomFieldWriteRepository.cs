@@ -16,7 +16,6 @@ namespace PrimeTech.Interview.Business.Infrastructure.Repositories.Companies
         public async Task DeleteCompanyCustomFieldsByCompanyIdAsync(int companyId)
         {
             await _dbSet.Where(a => a.CompanyID == companyId).ExecuteDeleteAsync();
-            await _context.SaveChangesAsync();
         }
     }
 }

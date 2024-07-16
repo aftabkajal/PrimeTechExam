@@ -1,5 +1,5 @@
-﻿using PrimeTech.Interview.Business.Domain.Entities;
-using System.Collections.Generic;
+﻿using PrimeTech.Interview.Business.Domain.Dtos;
+using PrimeTech.Interview.Business.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace PrimeTech.Interview.Business.Application.Interfaces
@@ -8,8 +8,8 @@ namespace PrimeTech.Interview.Business.Application.Interfaces
     {
         Task AddCustomFieldAsync(CompanyCustomField company);
 
-        Task DeleteCustomFieldAsync(int id);
+        Task DeleteCustomFieldsAsync(int companyId);
 
-        Task<IEnumerable<CompanyCustomField>> GetAllCustomFieldaByCompanyIdAsync(int companyId);
+        Task<CompanyCustomFieldDtos> GetAllCustomFieldaByCompanyIdAsync(int companyId);
     }
 }

@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using PrimeTech.Interview.Business.Application.Interfaces;
 using PrimeTech.Interview.Business.Application.Services;
@@ -7,6 +8,7 @@ using PrimeTech.Interview.Business.Infrastructure.Data;
 using PrimeTech.Interview.Business.Infrastructure.Extensions;
 using PrimeTech.Interview.Business.Infrastructure.Middleware;
 using PrimeTech.Interview.Business.QueryHandlers.Handlers;
+using PrimeTech.Interview.Business.WebService.Validators;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,8 +40,13 @@ builder.Services.RegisterCollection(
         typeof(IQueryHandler<,>),
         new[] { typeof(TestQueryHandler).Assembly });
 
+builder.Services.RegisterCollection(
+        typeof(IValidator<>),
+        new[] { typeof(CreateCompanyCommandValidator).Assembly });
+
 builder.Services.AddScoped<ICompanyCustomFieldService, CompanyCustomFieldService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 var app = builder.Build();

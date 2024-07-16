@@ -37,6 +37,5 @@ public class WriteRepository<T> : IWriteRepository<T> where T : EntityBase
             throw new ArgumentException($"Entity not found with the ID");
         }
         _dbSet.Remove(entity);
-        await _context.SaveChangesAsync();
     }
 }
