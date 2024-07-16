@@ -1,8 +1,10 @@
 ﻿using PrimeTech.Interview.Business.Application.Interfaces;
 using PrimeTech.Interview.Business.Domain.AggregatesModel.Companies;
+using PrimeTech.Interview.Business.Domain.Dtos;
 using PrimeTech.Interview.Business.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PrimeTech.Interview.Business.Application.Services
@@ -20,7 +22,7 @@ namespace PrimeTech.Interview.Business.Application.Services
         }
         public async Task AddCompanyAsync(Company company)
         {
-          await _companyWriteRepository.AddAsync(company);
+            await _companyWriteRepository.AddAsync(company);
         }
 
         public async Task DeleteCompanyAsync(int id)
@@ -28,14 +30,18 @@ namespace PrimeTech.Interview.Business.Application.Services
             await _companyWriteRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<Company>> GetAllCompaniesAsync()
+        public async Task<IEnumerable<CompanyDto>> GetAllCompaniesAsync()
         {
-            return await _companyReadRepository.GetAllAsync();
+            var companies = await _companyReadRepository.GetAllAsync();
+            return companies.Select(x => new CompanyDto { Id = x.Id, Name = x.Name, Address = x.Address }).ToList();
         }
 
-        public async Task<Company> GetCompanyByIdAsync(int id)
+        public async Task<CompanyDto> GetCompanyByIdAsync(int id)
         {
-           return await _companyReadRepository.GetByIdAsync(id);
+            var company = await _companyReadRepository.GetByIdAsync(id);
+            if (company == null) return new CompanyDto();
+
+            return new CompanyDto { Id = company.Id, Address = company.Address, Name = company.Name };
         }
 
         public async Task UpdateCompanyAsync(Company company)

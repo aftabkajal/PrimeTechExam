@@ -4,52 +4,84 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace PrimeTech.Interview.Business.Infrastructure.Extensions
+namespace PrimeTech.Interview.Business.Infrastructure.Extensions;
+
+public static class ServiceCollectionExtension
 {
-    public static class Extensions
+    public static void RegisterCollection(this IServiceCollection services, Type openGenericServiceType, IEnumerable<Assembly> assemblies)
     {
-        public static void RegisterCollection(this IServiceCollection services, Type openGenericServiceType, IEnumerable<Assembly> assemblies)
+        var types =
+           from assembly in assemblies.Distinct()
+           where !assembly.IsDynamic
+           from type in GetTypesFromAssembly(assembly)
+           where !type.IsGenericTypeDefinition
+           where ServiceIsAssignableFromImplementation(openGenericServiceType, type)
+           select type;
+
+        foreach (var type in types)
         {
-            var types = assemblies
-                .Distinct()
-                .Where(a => !a.IsDynamic)
-                .SelectMany(GetTypesFromAssembly)
-                .Where(type => !type.IsGenericTypeDefinition && IsAssignableToGenericType(type, openGenericServiceType))
-                .ToList();
-
-            foreach (var type in types)
-            {
-                var interfaceType = type.GetInterfaces().FirstOrDefault(i => IsAssignableToGenericType(i, openGenericServiceType));
-                if (interfaceType != null)
-                {
-                    services.AddScoped(interfaceType, type);
-                }
-            }
+            var genericimplementationType = type.GetTypeInfo().ImplementedInterfaces.First();
+            services.AddScoped(genericimplementationType, type);
         }
-
-        public static void RegisterCollection<TService>(this IServiceCollection services, IEnumerable<Assembly> assemblies) where TService : class
-        {
-            RegisterCollection(services, typeof(TService), assemblies);
-        }
-
-        private static bool IsAssignableToGenericType(Type givenType, Type genericType)
-        {
-            var interfaceTypes = givenType.GetInterfaces();
-
-            foreach (var it in interfaceTypes)
-            {
-                if (it.IsGenericType && it.GetGenericTypeDefinition() == genericType)
-                {
-                    return true;
-                }
-            }
-
-            var baseType = givenType.BaseType;
-            if (baseType == null) return false;
-
-            return baseType.IsGenericType && baseType.GetGenericTypeDefinition() == genericType || IsAssignableToGenericType(baseType, genericType);
-        }
-
-        private static IEnumerable<Type> GetTypesFromAssembly(Assembly assembly) => assembly.GetTypes();
     }
+
+    public static void RegisterCollection<TService>(this IServiceCollection services, IEnumerable<Assembly> assemblies) where TService : class
+    {
+        var serviceType = typeof(TService);
+
+        RegisterCollection(services, serviceType, assemblies);
+    }
+
+
+    private static bool ServiceIsAssignableFromImplementation(Type service, Type implementation)
+    {
+        if (!service.IsGenericType)
+        {
+            return service.IsAssignableFrom(implementation);
+        }
+
+        if (implementation.IsGenericType && implementation.GetGenericTypeDefinition() == service)
+        {
+            return true;
+        }
+
+        foreach (Type interfaceType in implementation.GetInterfaces())
+        {
+            if (IsGenericImplementationOf(interfaceType, service))
+            {
+                return true;
+            }
+        }
+
+        // PERF: We don't call GetBaseTypes(), to prevent memory allocations.
+        Type baseType = implementation.BaseType ?? (implementation != typeof(object) ? typeof(object) : null);
+
+        while (baseType != null)
+        {
+            if (IsGenericImplementationOf(baseType, service))
+            {
+                return true;
+            }
+
+            baseType = baseType.BaseType;
+        }
+
+        return false;
+    }
+    private static bool IsGenericImplementationOf(Type type, Type serviceType) =>
+      type == serviceType
+      || serviceType.IsVariantVersionOf(type)
+      || (type.IsGenericType && type.GetGenericTypeDefinition() == serviceType);
+
+    private static bool IsVariantVersionOf(this Type type, Type otherType) =>
+        type.IsGenericType
+        && otherType.IsGenericType
+        && type.GetGenericTypeDefinition() == otherType.GetGenericTypeDefinition()
+        && type.IsAssignableFrom(otherType);
+
+    private static IEnumerable<Type> GetTypesFromAssembly(Assembly assembly)
+    {
+        return assembly.GetTypes();
+    }
+
 }

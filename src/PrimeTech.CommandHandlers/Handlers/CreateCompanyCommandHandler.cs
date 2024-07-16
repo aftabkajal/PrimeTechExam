@@ -2,6 +2,7 @@
 using PrimeTech.Interview.Business.Commands.Commands;
 using PrimeTech.Interview.Business.Domain.Common;
 using PrimeTech.Interview.Business.Domain.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace PrimeTech.Interview.Business.CommandHandlers.Handlers
@@ -23,6 +24,8 @@ namespace PrimeTech.Interview.Business.CommandHandlers.Handlers
             {
                 Name = command.Name,
                 Address = command.Address,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
             };
 
             await _companyService.AddCompanyAsync(company);

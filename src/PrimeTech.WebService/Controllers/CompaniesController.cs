@@ -24,7 +24,6 @@ namespace PrimeTech.Interview.Business.WebService.Controllers
             _queryDispatcher = queryDispatcher;
         }
 
-        // GET: api/Companies
         [HttpGet("all")]
         public async Task<object> GetAllCompanies([FromBody] GetAllCompaniesQuery query)
         {
@@ -32,7 +31,6 @@ namespace PrimeTech.Interview.Business.WebService.Controllers
             return result.GetResponse();
         }
 
-        // GET: api/Companies/customfields
         [HttpGet("customfields")]
         public async Task<object> GetCompanyCustomFieldsByCompanyId([FromBody] GetCompanyCustomFieldsByCompanyQuery query)
         {
@@ -40,37 +38,32 @@ namespace PrimeTech.Interview.Business.WebService.Controllers
             return result.GetResponse();
         }
 
-        // GET: api/Companies/{id}
-        [HttpGet("{id}")]
+        [HttpGet("GetCompany")]
         public async Task<object> GetCompany([FromBody] GetCompanyQuery query)
         {
             var result = await _queryDispatcher.DispatchAsync<GetCompanyQuery, StringResult>(query);
             return result.GetResponse();
         }
 
-        // POST: api/Companies
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<CommandResponse> Post([FromBody] CreateCompanyCommand command)
         {
             return await _commandDispatcher.DispatchAsync<CreateCompanyCommand, CommandResponse>(command);
         }
 
-        // PUT: api/Companies
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<CommandResponse> Put([FromBody] UpdateCompanyCommand command)
         {
             return await _commandDispatcher.DispatchAsync<UpdateCompanyCommand, CommandResponse>(command);
         }
 
-        // DELETE: api/Companies
-        [HttpDelete]
+        [HttpDelete("Delete")]
         public async Task<CommandResponse> Delete([FromBody] DeleteCompanyCommand command)
         {
             return await _commandDispatcher.DispatchAsync<DeleteCompanyCommand, CommandResponse>(command);
         }
 
-        // POST: api/Companies/customfield
-        [HttpPost("customfield")]
+        [HttpPost("CreareCustomField")]
         public async Task<CommandResponse> CreateCompanyCustomField([FromBody] CreateCompanyCustomFieldCommand command)
         {
             return await _commandDispatcher.DispatchAsync<CreateCompanyCustomFieldCommand, CommandResponse>(command);

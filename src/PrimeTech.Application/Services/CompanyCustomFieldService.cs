@@ -1,8 +1,9 @@
 ﻿using PrimeTech.Interview.Business.Application.Interfaces;
 using PrimeTech.Interview.Business.Domain.AggregatesModel.Companies;
+using PrimeTech.Interview.Business.Domain.Dtos;
 using PrimeTech.Interview.Business.Domain.Entities;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PrimeTech.Interview.Business.Application.Services
@@ -23,14 +24,18 @@ namespace PrimeTech.Interview.Business.Application.Services
             await _writeRepository.AddAsync(company);
         }
 
-        public async Task DeleteCustomFieldAsync(int id)
+        public async Task DeleteCustomFieldsAsync(int companyId)
         {
-            await _writeRepository.DeleteAsync(id);
+            await _writeRepository.DeleteCompanyCustomFieldsByCompanyIdAsync(companyId);
         }
 
-        public async Task<IEnumerable<CompanyCustomField>> GetAllCustomFieldaByCompanyIdAsync(int companyId)
+        public async Task<CompanyCustomFieldDtos> GetAllCustomFieldaByCompanyIdAsync(int companyId)
         {
-            return await _readRepository.GetCompanyCustomFieldsByCompanyIdAsync(companyId);
+            var fields = await _readRepository.GetCompanyCustomFieldsByCompanyIdAsync(companyId);
+            var companyCustomFieldDto = new CompanyCustomFieldDtos { CompanyID = companyId };
+            var customFields = fields.Select(a => new CompanyCustomFieldDto { FieldName = a.FieldName, FieldValue = a.FieldValue, Id = a.Id }).ToList();
+            companyCustomFieldDto.CustomFields = customFields ?? [];
+            return companyCustomFieldDto;
         }
     }
 }
