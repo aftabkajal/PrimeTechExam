@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="AggregatesModel\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Interfaces\Repositories\" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SharedKernel\PrimeTech.SharedKernel\PrimeTech.SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>

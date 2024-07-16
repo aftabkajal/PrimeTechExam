@@ -6,4 +6,8 @@
 	<AssemblyName>PrimeTech.Interview.Business.Queries</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SharedKernel\PrimeTech.SharedKernel\PrimeTech.SharedKernel.csproj" />
+  </ItemGroup>
+
 </Project>

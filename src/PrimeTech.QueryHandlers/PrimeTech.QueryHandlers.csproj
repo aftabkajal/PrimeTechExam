@@ -6,4 +6,14 @@
 	<AssemblyName>PrimeTech.Interview.Business.QueryHandlers</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PrimeTech.Application\PrimeTech.Application.csproj" />
+    <ProjectReference Include="..\PrimeTech.Domain\PrimeTech.Domain.csproj" />
+    <ProjectReference Include="..\PrimeTech.Queries\PrimeTech.Queries.csproj" />
+  </ItemGroup>
+
 </Project>

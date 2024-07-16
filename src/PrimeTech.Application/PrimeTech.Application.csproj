@@ -2,13 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-	<RootNamespace>PrimeTech.Interview.Business.CommandHandlers</RootNamespace>
-	<AssemblyName>PrimeTech.Interview.Business.CommandHandlers</AssemblyName>
+	<RootNamespace>PrimeTech.Interview.Business.Application</RootNamespace>
+	<AssemblyName>PrimeTech.Interview.Business.Application</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\PrimeTech.Infrastructure\PrimeTech.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
