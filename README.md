@@ -30,6 +30,7 @@ This document provides an overview of the database schema used in the PrimeTech 
 - DDD (Domain-Driven Design)
 - Unit of Work Pattern
 - Repository Pattern
+- Clean Architecture
 
 ## Features
 - CRUD Operations
