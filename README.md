@@ -18,7 +18,54 @@ Task 2: Implement company-wise extra field facility.
 
 ## Overview
 
-This document provides an overview of the database schema used in the PrimeTech application. It describes the tables, their columns, and the relationships between them.
+This document provides an overview of the database schema used in the PrimeTech application. It details the implementation of CRUD operations for the Company table along with a feature to allow clients to add custom fields to the `Company` table. This design ensures that only text/varchar fields can be added initially, with the potential for adding other types in the future.
+
+## Technology Used
+
+- C#
+- .NET Core
+- REST API
+- ASP.NET Core
+- Entity Framework Core
+- CQRS (Command Query Responsibility Segregation)
+- DDD (Domain-Driven Design)
+- Unit of Work Pattern
+- Repository Pattern
+
+## Features
+- CRUD Operations
+- Dynamic Custom Fields
+
+## Database Schema
+### Company Table
+- `Id` (int): Primary key
+- `Name` (string): Name of the company
+- `Address` (string): Address of the company
+
+### CustomField Table
+- `Id` (int): Primary key
+- `CompanyId` (int): Foreign key referencing the `Company` table
+- `FieldName` (string): Name of the custom field
+- `FieldValue` (string): Value of the custom field
+
+## Tasks
+### Task 1: Implement CRUD Operations
+- Create: Add a new company.
+- Read: Retrieve company details.
+- Update: Modify company information.
+- Delete: Remove a company from the database.
+
+### Task 2: Implement Dynamic Custom Fields
+- Allow clients to add custom text/varchar fields to the `Company` table.
+
+## Example Queries
+- Select all companies with their custom fields.
+- Add a new custom field for a company.
+- Update a company's address.
+- Delete a custom field.
+
+## How to Extend Functionality
+- Add support for new field types (e.g., date, integer) in custom fields.
 
 ## Tables
 
