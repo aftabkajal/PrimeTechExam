@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	<RootNamespace>PrimeTech.Interview.Business.SharedKernel</RootNamespace>
+	<AssemblyName>PrimeTech.Interview.Business.SharedKernel</AssemblyName>
+  </PropertyGroup>
+
+</Project>

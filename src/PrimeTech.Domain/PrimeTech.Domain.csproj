@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	<RootNamespace>PrimeTech.Interview.Business.Domain</RootNamespace>
+	<AssemblyName>PrimeTech.Interview.Business.Domain</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="AggregatesModel\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Interfaces\Repositories\" />
+  </ItemGroup>
+
+</Project>

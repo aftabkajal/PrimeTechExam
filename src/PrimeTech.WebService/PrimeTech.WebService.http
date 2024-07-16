@@ -1,0 +1,6 @@
+@PrimeTech.WebService_HostAddress = http://localhost:5032
+
+GET {{PrimeTech.WebService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
