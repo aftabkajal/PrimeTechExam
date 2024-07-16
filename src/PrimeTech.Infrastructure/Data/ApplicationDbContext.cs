@@ -14,6 +14,16 @@ public class ApplicationDbContext : DbContext
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Company>().HasKey(c => c.Id);
+        modelBuilder.Entity<CompanyCustomField>().HasKey(cf => cf.Id);
+
+        modelBuilder.Entity<CompanyCustomField>()
+            .HasOne<Company>()
+            .WithMany()
+            .HasForeignKey(cf => cf.CompanyID);
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
