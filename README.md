@@ -35,6 +35,8 @@ This document provides an overview of the database schema used in the PrimeTech 
 - Serilog
 - Swagger
 - SQL
+- Git
+- -Github
 
 ## Features
 - CRUD Operations
